@@ -1,2 +1,2 @@
 # Le epic programming
- Trying out competitive programming 
+Trying out problems from various platforms for practice 
