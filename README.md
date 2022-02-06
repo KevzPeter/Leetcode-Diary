@@ -1,2 +1,5 @@
 # Le epic programming
-Trying out problems from various platforms for practice 
+
+Repository containing solutions for problems on LeetCode
+
+[👉🏽 Check out my LeetCode profile](https://leetcode.com/kevzpeter)
