@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class MyClass {
+public class SubsequencePermutation {
     public static void main(String args[]) {
         int arr[] = new int[] { 5, 3, 8 };
         int n = arr.length;
