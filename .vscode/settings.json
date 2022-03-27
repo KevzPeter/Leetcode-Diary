@@ -1,6 +1,7 @@
 {
     "java.project.sourcePaths": [
         "Template",
-        "Math"
+        "Math",
+        "Tree"
     ]
 }
