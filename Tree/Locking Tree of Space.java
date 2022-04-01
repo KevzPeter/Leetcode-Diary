@@ -81,26 +81,6 @@ class TestClass {
         for (TreeNode lockedChild : lockedChildren) {
             unlock(lockedChild, id);
         }
-        // unlock all parent nodes of this node
-        for (TreeNode parent = node.parent; parent != null; parent = parent.parent) {
-            unlock(parent, id);
-        }
-
-        // for (TreeNode lockedNode : lockedNodes) {
-        // for (TreeNode anc = lockedNode.parent; anc != null; anc = anc.parent) {
-        // if (anc == node) {
-        // unlock(lockedNode, id);
-        // // for (TreeNode lockedAnc = anc.parent; lockedAnc != null; lockedAnc =
-        // // lockedAnc.parent) {
-        // // lockedAnc.lockedChildren--;
-        // // }
-        // // lockedNode.locked = false;
-        // // lockedNode.id = -1;
-        // // lockedNodes.remove(node);
-        // break;
-        // }
-        // }
-        // }
         return lock(node, id);
     }
 
