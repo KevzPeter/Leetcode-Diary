@@ -1,3 +1,16 @@
+import java.util.*;
+
+class TreeNode {
+    TreeNode left;
+    TreeNode right;
+    int val;
+
+    TreeNode(int val) {
+        this.val = val;
+        this.left = this.right = null;
+    }
+}
+
 class Solution {
     public int deepestLeavesSum(TreeNode root) {
         int res = 0, i;

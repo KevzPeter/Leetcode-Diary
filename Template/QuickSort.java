@@ -2,7 +2,7 @@ public class QuickSort {
     public static void main(String args[]) {
         int[] arr = { 7, 3, 5, 7, 9, 1, 2, 4, 6, 8, 0, 5 };
         QuickSort obj = new QuickSort();
-        sort(arr, 0, arr.length - 1);
+        obj.sort(arr, 0, arr.length - 1);
         print(arr);
     }
 
@@ -12,7 +12,7 @@ public class QuickSort {
         }
     }
 
-    public static void sort(int[] arr, int low, int high) {
+    public void sort(int[] arr, int low, int high) {
         if (low < high) {
             int p = partition(arr, low, high);
             sort(arr, low, p - 1);
