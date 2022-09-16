@@ -1,3 +1,5 @@
+import java.util.*;
+
 // 3D memoized solution
 class Solution {
     public int maximumScore(int[] nums, int[] m) {
@@ -18,7 +20,7 @@ class Solution {
 }
 
 // 2D memoized solution
-class Solution {
+class Solution2 {
     int dp(Integer[][] memo, int[] nums, int[] multipliers, int op, int left) {
         // For Right Pointer
         int n = nums.length;
@@ -45,7 +47,7 @@ class Solution {
 }
 
 // 2D DP
-class Solution {
+class Solution3 {
     public int maximumScore(int[] nums, int[] multipliers) {
         // For Right Pointer
         int n = nums.length;
@@ -68,7 +70,7 @@ class Solution {
 }
 
 // Space optimized 1D DP (only solution that doesn't result in TLE)
-class Solution {
+class Solution4 {
     public int maximumScore(int[] nums, int[] multipliers) {
         // For Right Pointer
         int n = nums.length;
@@ -77,11 +79,11 @@ class Solution {
         int[] dp = new int[m + 1];
 
         for (int op = m - 1; op >= 0; op--) {
-            int[] next_row = dp.clone();
+            int[] nextRow = dp.clone();
             // Present Row is now next_Row because we are moving upwards
             for (int left = op; left >= 0; left--) {
-                dp[left] = Math.max(multipliers[op] * nums[left] + next_row[left + 1],
-                        multipliers[op] * nums[n - 1 - (op - left)] + next_row[left]);
+                dp[left] = Math.max(multipliers[op] * nums[left] + nextRow[left + 1],
+                        multipliers[op] * nums[n - 1 - (op - left)] + nextRow[left]);
             }
         }
 
