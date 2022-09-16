@@ -2,19 +2,14 @@
 class Solution {
     public int maximumScore(int[] nums, int[] m) {
         int n = nums.length;
-        int[][][] memo = new int[m.length + 1][n + 1][m.length + 1];
-        for (int[][] _mm : memo) {
-            for (int[] _m : _mm) {
-                Arrays.fill(_m, Integer.MIN_VALUE);
-            }
-        }
+        Integer[][][] memo = new Integer[m.length + 1][n + 1][m.length + 1];
         return helper(0, nums.length - 1, 0, nums, m, memo);
     }
 
-    private int helper(int start, int end, int i, int[] nums, int[] m, int[][][] memo) {
+    private int helper(int start, int end, int i, int[] nums, int[] m, Integer[][][] memo) {
         if (start > end || i >= m.length)
             return 0;
-        if (memo[start][end][i] != Integer.MIN_VALUE)
+        if (memo[start][end][i] != null)
             return memo[start][end][i];
         int takeStart = nums[start] * m[i] + helper(start + 1, end, i + 1, nums, m, memo);
         int takeEnd = nums[end] * m[i] + helper(start, end - 1, i + 1, nums, m, memo);
