@@ -1,4 +1,3 @@
-// daily challenge : 1/10/22
 class Solution {
     public int numDecodings(String s) {
         if (s == null || s.length() == 0 || s.charAt(0) == '0')
@@ -16,13 +15,16 @@ class Solution {
             return memo[i];
         char c = s.charAt(i);
         int ans = 0;
+        // substring starting with 0 is not a valid encoding
         if (c == '0') {
             return 0;
-        } else if (c == '1' && i < len - 1 && s.charAt(i + 1) >= '0' && s.charAt(i + 1) <= '9') {
-            ans += helper(i + 2, s, memo);
-        } else if (c == '2' && i < len - 1 && s.charAt(i + 1) >= '0' && s.charAt(i + 1) <= '6') {
+        }
+        // if it starts with 1 or 2, we can take two characters at the same time if it
+        // fulfills the conditions
+        else if (i < len - 1 && (c == '1' || (c == '2' && s.charAt(i + 1) >= '0' && s.charAt(i + 1) <= '6'))) {
             ans += helper(i + 2, s, memo);
         }
+        // taking a single character at a time
         ans += helper(i + 1, s, memo);
         return memo[i] = ans;
     }
