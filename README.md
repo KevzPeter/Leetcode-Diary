@@ -1,7 +1,7 @@
-# Le epic programming
+# LeetCode Diary
 
-Repository containing solutions for problems on LeetCode
+A repository containing my ✅Solutions for problems on LeetCode🧑🏾‍💻
 
 [👉🏽 Check out my LeetCode profile](https://leetcode.com/kevzpeter)
 
-![Kevzpeter](media/leetcode-profile-14-9-22.png?raw=true)
+![](https://leetcard.jacoblin.cool/kevzpeter?ext=contest&theme=unicorn)
