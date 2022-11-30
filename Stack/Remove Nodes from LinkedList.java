@@ -12,7 +12,6 @@ class Solution {
         }
         temp = new ListNode();
         head = temp;
-        Iterator it = stack.iterator();
         for (Integer i : stack) {
             temp.next = new ListNode(i);
             temp = temp.next;
