@@ -1,4 +1,6 @@
-public class Solution {
+import java.util.*;
+
+class Solution {
     public int orientation(int[] p, int[] q, int[] r) {
         return (q[1] - p[1]) * (r[0] - q[0]) - (q[0] - p[0]) * (r[1] - q[1]);
     }
