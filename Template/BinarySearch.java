@@ -47,4 +47,32 @@ public class BinarySearch {
         }
         return -1;
     }
+
+    public int lowerBoundBinSearch(int[] arr, int target) {
+        int n = arr.length;
+        int low = 0, high = n - 1;
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+            if (arr[mid] >= target) {
+                high = mid;
+            } else
+                low = mid + 1;
+        }
+        return low;
+    }
+
+    public int upperBoundBinSearch(int[] arr, int target) {
+        int n = arr.length;
+        int low = 0, high = n - 1;
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+            if (arr[mid] <= target) {
+                low = mid + 1;
+            } else
+                high = mid;
+        }
+        return low;
+    }
 }
+// reference for implementing Upper Bound & Lower bound
+// https://medium.com/swlh/binary-search-find-upper-and-lower-bound-3f07867d81fb
