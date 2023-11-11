@@ -18,10 +18,7 @@ class Graph {
         }
 
         for (int[] edge : edges) {
-            int u = edge[0];
-            int v = edge[1];
-            int w = edge[2];
-            adj.get(u).add(new Pair(v, w));
+            addEdge(edge);
         }
     }
 
