@@ -1,7 +1,7 @@
 class Solution {
     private static class TrieNode {
         TrieNode[] children;
-        boolean isWord;
+        boolean isRoot;
 
         TrieNode() {
             this.children = new TrieNode[26];
@@ -25,10 +25,10 @@ class Solution {
     public String replaceWords(List<String> dictionary, String sentence) {
         StringBuilder sb = new StringBuilder();
 
-        outer: for (String word : dictionary) {
+        for (String word : dictionary) {
             TrieNode currRoot = root;
-
-            for (int i = 0; i < word.length(); i++) {
+            boolean foundRoot = false;
+            for (int i = 0; i < word.length() && !foundRoot; i++) {
                 char currChar = word.charAt(i);
 
                 if (!currRoot.hasChild(currChar)) {
@@ -37,43 +37,47 @@ class Solution {
 
                 currRoot = currRoot.getChild(currChar);
 
-                if (currRoot.isWord)
-                    continue outer;
+                if (currRoot.isRoot)
+                    foundRoot = true;
+
                 if (i == word.length() - 1) {
-                    currRoot.isWord = true;
+                    currRoot.isRoot = true;
                 }
             }
         }
 
         String[] words = sentence.split(" ");
 
-        outer: for (int i = 0; i < words.length; i++) {
+        for (int i = 0; i < words.length; i++) {
             TrieNode currRoot = root;
             String word = words[i];
             StringBuilder substr = new StringBuilder();
+            boolean foundRoot = false;
 
-            for (int j = 0; j < word.length(); j++) {
+            for (int j = 0; j < word.length() && !foundRoot; j++) {
                 char currChar = word.charAt(j);
                 substr.append(currChar);
 
                 if (currRoot.hasChild(currChar)) {
                     currRoot = currRoot.getChild(currChar);
-                    if (currRoot.isWord) {
+                    if (currRoot.isRoot) {
                         sb.append(substr.toString());
                         if (i < words.length - 1) {
                             sb.append(" ");
                         }
-                        continue outer;
+                        foundRoot = true;
                     }
                 } else {
                     break;
                 }
             }
-
-            sb.append(word);
-            if (i < words.length - 1) {
-                sb.append(" ");
+            if (!foundRoot) {
+                sb.append(word);
+                if (i < words.length - 1) {
+                    sb.append(" ");
+                }
             }
+
         }
         return sb.toString();
     }
