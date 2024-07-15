@@ -1,53 +1,52 @@
-class Solution {
+import java.util.*;
+
+public class NumberOfAtoms {
     public String countOfAtoms(String formula) {
         Stack<String> stack = new Stack<>();
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < formula.length(); i++){
+        for (int i = 0; i < formula.length(); i++) {
             char c = formula.charAt(i);
-            if(Character.isLetter(c) || Character.isDigit(c)){
+            if (Character.isLetter(c) || Character.isDigit(c)) {
                 sb.append(c);
-            }
-            else if(c == '('){
+            } else if (c == '(') {
                 stack.push(sb.toString());
                 stack.push("(");
                 sb = new StringBuilder();
-            }
-            else{
+            } else {
                 String curr = sb.toString();
-                if(curr.length() == 0){
+                if (curr.length() == 0) {
                     sb = new StringBuilder();
-                    while(!stack.peek().equals("(")){
+                    while (!stack.peek().equals("(")) {
                         sb.append(stack.pop());
                     }
                     curr = sb.toString();
                 }
-                if(stack.peek().equals("(")){
+                if (stack.peek().equals("(")) {
                     stack.pop();
                 }
                 sb = new StringBuilder();
-                if(i + 1 < formula.length() && Character.isDigit(formula.charAt(i + 1))){
+                if (i + 1 < formula.length() && Character.isDigit(formula.charAt(i + 1))) {
                     int j = i + 1;
-                    while(j < formula.length() && Character.isDigit(formula.charAt(j))){
+                    while (j < formula.length() && Character.isDigit(formula.charAt(j))) {
                         j++;
                     }
                     long count = Long.parseLong(formula.substring(i + 1, j));
-                    for(int k = 0; k < count; k++){
+                    for (int k = 0; k < count; k++) {
                         sb.append(curr);
                     }
                     stack.push(parser(sb.toString()));
                     sb = new StringBuilder();
                     i = j - 1;
-                }
-                else{
+                } else {
                     stack.push(curr);
                 }
             }
         }
-        if(sb.length() > 0){
+        if (sb.length() > 0) {
             stack.push(sb.toString());
         }
         sb = new StringBuilder();
-        while(!stack.isEmpty()){
+        while (!stack.isEmpty()) {
             sb.append(stack.pop());
         }
         return parser(sb.toString());
@@ -66,7 +65,7 @@ class Solution {
                     }
                     if (i + 2 < formula.length() && Character.isDigit(formula.charAt(i + 2))) {
                         int j = i + 2;
-                        while(j < formula.length() && Character.isDigit(formula.charAt(j))){
+                        while (j < formula.length() && Character.isDigit(formula.charAt(j))) {
                             j++;
                         }
                         long count = Long.parseLong(formula.substring(i + 2, j));
@@ -80,13 +79,12 @@ class Solution {
                         tMap.put(element, 0L);
                     }
                     int j = i + 1;
-                    while(j < formula.length() && Character.isDigit(formula.charAt(j))){
+                    while (j < formula.length() && Character.isDigit(formula.charAt(j))) {
                         j++;
                     }
                     long count = Long.parseLong(formula.substring(i + 1, j));
                     tMap.put(element, tMap.get(element) + count);
-                }
-                else{
+                } else {
                     String element = formula.substring(i, i + 1);
                     if (!tMap.containsKey(element)) {
                         tMap.put(element, 0L);
@@ -97,8 +95,15 @@ class Solution {
         }
         for (Map.Entry<String, Long> e : tMap.entrySet()) {
             sb.append(e.getKey());
-            if(e.getValue() > 1) sb.append(String.valueOf(e.getValue()));
+            if (e.getValue() > 1)
+                sb.append(String.valueOf(e.getValue()));
         }
         return sb.toString();
+    }
+
+    public static void main(String[] args) {
+        NumberOfAtoms sol = new NumberOfAtoms();
+        String result = sol.countOfAtoms("K4(ON(SO3)2)2");
+        System.out.println(result);
     }
 }
