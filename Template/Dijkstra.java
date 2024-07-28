@@ -1,67 +1,65 @@
 import java.util.*;
 import java.util.PriorityQueue;
+import java.util.logging.Logger;
 
-class Node implements Comparator<Node> {
-    int vertex;
-    int weight;
+class Node {
+    private int vertex;
+    private int weight;
 
-    public Node(int v, int w) {
+    Node(int v, int w) {
         vertex = v;
         weight = w;
     }
 
-    Node() {
-    };
-
-    public int getVertex() {
+    int getVertex() {
         return this.vertex;
     }
 
-    public int getWeight() {
+    int getWeight() {
         return this.weight;
-    }
-
-    @Override
-    public int compare(Node n1, Node n2) {
-        if (n1.weight < n2.weight)
-            return -1;
-        else if (n1.weight > n2.weight)
-            return 1;
-        else
-            return 0;
     }
 }
 
 public class Dijkstra {
-    public static void main(String args[]) {
-        int N = 5;
-        List<List<Node>> adj = new ArrayList<>();
-        for (int i = 0; i < N; i++) {
-            adj.add(new ArrayList<>());
+    private static final Logger LOGGER = Logger.getLogger(Dijkstra.class.getName());
+
+    public static void main(String[] args) {
+        int[][] edges = { { 0, 1, 1 }, { 0, 2, 2 }, { 0, 3, 4 }, { 2, 3, 1 }, { 3, 4, 2 } };
+        int n = 5;
+        Map<Integer, List<Node>> adj = new HashMap<>();
+        for (int[] edge : edges) {
+            int a = edge[0];
+            int b = edge[1];
+            int c = edge[2];
+            adj.computeIfAbsent(a, k -> new ArrayList<>()).add(new Node(b, c));
+            adj.computeIfAbsent(b, k -> new ArrayList<>()).add(new Node(a, c));
         }
-        // create list here
         Dijkstra obj = new Dijkstra();
-        obj.getShortestPath(0, adj, N); // 0 is source
+        obj.getShortestPath(0, adj, n); // 0 is source
     }
 
-    void getShortestPath(int s, List<List<Node>> adj, int n) {
+    void getShortestPath(int s, Map<Integer, List<Node>> adj, int n) {
         int[] dist = new int[n];
         for (int i = 0; i < n; i++) {
             dist[i] = Integer.MAX_VALUE;
         }
-        PriorityQueue<Node> pq = new PriorityQueue<>(new Node());
+        dist[s] = 0;
+        PriorityQueue<Node> pq = new PriorityQueue<>((Node a, Node b) -> a.getWeight() - b.getWeight());
         pq.offer(new Node(s, 0));
-        while (pq.size() > 0) {
+        while (!pq.isEmpty()) {
             Node node = pq.poll();
-            for (Node it : adj.get(node.getVertex())) {
-                if (dist[node.getVertex()] + it.getWeight() < dist[it.getVertex()]) {
-                    dist[it.getVertex()] = dist[node.getVertex()] + it.getWeight();
-                    pq.offer(new Node(it.getVertex(), dist[it.getVertex()]));
+            if (!adj.containsKey(node.getVertex())) {
+                continue;
+            }
+            for (Node neighbor : adj.get(node.getVertex())) {
+                if (dist[node.getVertex()] + neighbor.getWeight() < dist[neighbor.getVertex()]) {
+                    dist[neighbor.getVertex()] = dist[node.getVertex()] + neighbor.getWeight();
+                    pq.offer(new Node(neighbor.getVertex(), dist[neighbor.getVertex()]));
                 }
             }
         }
         for (int i = 0; i < n; i++) {
-            System.out.println("Distance to destination " + i + " : " + dist[i]);
+            LOGGER.info("Distance to destination " + i + " : " + dist[i]);
         }
     }
 }
