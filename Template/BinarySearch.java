@@ -48,19 +48,31 @@ public class BinarySearch {
         return -1;
     }
 
+    /**
+     * The lower bound of a target value in a sorted array is the index of the first
+     * element that is greater than or equal to the target. In other words, it is
+     * the leftmost position where the target could be inserted without disrupting
+     * the order of the array.
+     */
     public int lowerBoundBinSearch(int[] arr, int target) {
         int n = arr.length;
         int low = 0, high = n - 1;
         while (low < high) {
             int mid = low + (high - low) / 2;
-            if (arr[mid] >= target) {
-                high = mid;
-            } else
+            if (arr[mid] < target) {
                 low = mid + 1;
+            } else
+                high = mid;
         }
         return low;
     }
 
+    /**
+     * The upper bound of a target value is the index of the first element that is
+     * strictly greater than the target. This is useful for finding the end of a
+     * range of duplicate elements, or the position where a target would go if it
+     * were added to the array.
+     */
     public int upperBoundBinSearch(int[] arr, int target) {
         int n = arr.length;
         int low = 0, high = n - 1;
