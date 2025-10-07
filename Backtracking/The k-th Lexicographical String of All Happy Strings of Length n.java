@@ -1,38 +1,25 @@
 class Solution {
-    String ans = "";
-    int count = 0;
-    private static char[] letters = {'a', 'b', 'c'};
+    String ans;
+    int count;
     public String getHappyString(int n, int k) {
-        helper("", n, k);
+        if(k > (3 * (1 << (n - 1)))) return "";
+        generateHappyStrings(n, ' ', new StringBuilder(), k);
         return ans;
     }
-    private void helper(String curr, int n, int k){
-        if(ans.length() > 0) return;
-        if(curr.length() == n){
+    private void generateHappyStrings(int n, char prev, StringBuilder curr, int k){
+        if(n == 0){
             count++;
-            if(count == k) ans = curr;
+            if(count == k){
+                ans = curr.toString();
+            }
             return;
         }
-        StringBuilder sb = new StringBuilder(curr);
-        if(curr.length() == 0){
-            for(int i = 0; i < 3; i++){
-                sb.append(letters[i]);
-                helper(sb.toString(), n, k);
-                sb.deleteCharAt(sb.length() - 1);
-            }
-        }
-        else{
-            char prevChar = sb.charAt(sb.length() - 1);
-            for(int i = 1; i < 3; i++){
-                if(prevChar == 'b'){
-                    i = i == 1 ? -1 : 1;
-                }
-                sb.append(letters[((prevChar - 'a') + i) % 3]);
-                helper(sb.toString(), n, k);
-                sb.deleteCharAt(sb.length() - 1);
-                if(prevChar == 'b'){
-                    i = i == -1 ? 1 : 2;
-                }
+        for(int i = 0; i < 3; i++){
+            char currentChar = (char)(i + 'a');
+            if(currentChar != prev){
+                curr.append(currentChar);
+                generateHappyStrings(n - 1, currentChar, curr, k);
+                curr.setLength(curr.length() - 1);
             }
         }
     }
